@@ -33,7 +33,7 @@ else:
     DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1']
-ALLOWED_HOSTS = ['disquaire.herokuapp.com']
+ALLOWED_HOSTS = ['djangodisquaire.herokuapp.com']
 
 if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
