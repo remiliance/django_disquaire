@@ -15,12 +15,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3w%_e45cf1@w=6wueq_5wcfzi-q+vb%6s8cch$$^#n5qrpa2w0'
+# SECRET_KEY = 'django-insecure-3w%_e45cf1@w=6wueq_5wcfzi-q+vb%6s8cch$$^#n5qrpa2w0'
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'r|kl]}kmvjIhxM=Sk!Myb\ngu')  # development key for the moment
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -31,14 +32,10 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'c@n%u@91tum=@j392g20b8znh7dqfo-v%81))gxbbmu$=dy_*)') # development key for the moment
-
 # ALLOWED_HOSTS = ['127.0.0.1']
 ALLOWED_HOSTS = ['disquaire.herokuapp.com']
 
-
 if os.environ.get('ENV') == 'PRODUCTION':
-
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -100,22 +97,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoProject_disquaire.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'disquaire', # le nom de notre base de donnees creee precedemment
-        'USER': 'postgres', # attention : remplacez par votre nom d'utilisateur
+        'NAME': 'disquaire',  # le nom de notre base de donnees creee precedemment
+        'USER': 'postgres',  # attention : remplacez par votre nom d'utilisateur
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
         'ATOMIC_REQUESTS': True,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -135,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -149,7 +143,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -161,6 +154,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import dj_database_url
+
 if os.environ.get('ENV') == 'PRODUCTION':
     # ...
     db_from_env = dj_database_url.config(conn_max_age=500)
