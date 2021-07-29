@@ -1,19 +1,27 @@
+import logging
 from sqlite3 import IntegrityError
-
+import logging as lg
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from .forms import ContactForm
-from .models import Album, Artist, Contact, Booking
+from store.forms import ContactForm
+from store.models import Album, Artist, Contact, Booking, BookingLines
 from django.http import HttpResponse
 from django.template import Context
+
+logging.basicConfig(level=logging.DEBUG)
 
 def index(request):
     albums = Album.objects.filter(available=True).order_by('-created_at')[:12]
     context = {
         'albums': albums
     }
+    all_albums = Album.objects.all()
+
+    # Album.objects.create(title="Rock2")
+    # Album.objects.create(title="Cat2")
+
     return render(request, 'store/index.html', context)
 
 def listing(request):
@@ -53,7 +61,7 @@ def detail(request, album_id):
 
         try:
             with transaction.atomic():
-                contact = Contact.objects.filter(email=email)
+                contact = Contact.objects.filter(email=email) # filtre ORM : Select ...where XXX = YYY
                 if not contact.exists():
                     # If a contact is not registered, create a new one.
                     contact = Contact.objects.create(
@@ -64,10 +72,24 @@ def detail(request, album_id):
                     contact = contact.first()
 
                 album = get_object_or_404(Album, id=album_id)
-                booking = Booking.objects.create(
+                booking1 = Booking.objects.create(
                     contact=contact,
-                    album=album
+                 #    album=album (ici = mettre booking line!)
                 )
+
+                bookingLines = BookingLines.objects.create(album=album, booking=booking1)
+                album2 = bookingLines.album # test relation 1/1
+                bookingLines2 = album2.bookinglines # test relation 1/1
+
+                if album2 == album :
+                    logging.debug("La fonction a bien été exécutée")
+                    logging.info("Message d'information général")
+                    logging.warning("Attention !")
+                    logging.error("Une erreur est arrivée")
+                    logging.critical("Erreur critique")
+                 #   raise Warning('Allez les bleus!') ## ca marche
+                    # lg.warning()
+
                 album.available = False
                 album.save()
                 context = {

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,8 +33,10 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-# ALLOWED_HOSTS = ['127.0.0.1']
-ALLOWED_HOSTS = ['djangodisquaire.herokuapp.com']
+if os.environ.get('ENV') == 'PRODUCTION':
+    ALLOWED_HOSTS = ['djangodisquaire.herokuapp.com']
+else:
+    ALLOWED_HOSTS = ['127.0.0.1']
 
 if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
