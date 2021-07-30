@@ -1,14 +1,11 @@
 import logging
 from sqlite3 import IntegrityError
-import logging as lg
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from store.forms import ContactForm
-from store.models import Album, Artist, Contact, Booking, BookingLines
-from django.http import HttpResponse
-from django.template import Context
+from store.models import Album, Contact, Booking, BookingLines
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -70,7 +67,7 @@ def detail(request, album_id):
                     )
                 else:
                     contact = contact.first()
-
+                # création du booking et de la booking line
                 album = get_object_or_404(Album, id=album_id)
                 booking1 = Booking.objects.create(
                     contact=contact,
@@ -81,6 +78,7 @@ def detail(request, album_id):
                 album2 = bookingLines.album # test relation 1/1
                 bookingLines2 = album2.bookinglines # test relation 1/1
 
+                 # juste pr tester les warnings ici
                 if album2 == album :
                     logging.debug("La fonction a bien été exécutée")
                     logging.info("Message d'information général")

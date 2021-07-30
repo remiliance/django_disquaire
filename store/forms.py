@@ -1,5 +1,6 @@
 from django.forms import ModelForm, TextInput, EmailInput
-from .models import Contact
+from store.models import Contact
+from django import forms
 
 class ContactForm(ModelForm):
     class Meta:
@@ -9,3 +10,4 @@ class ContactForm(ModelForm):
             'name': TextInput(attrs={'class': 'form-control'}),
             'email': EmailInput(attrs={'class': 'form-control'})
         }
+

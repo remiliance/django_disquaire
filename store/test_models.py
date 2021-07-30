@@ -1,6 +1,6 @@
 from django.test import TestCase
-from django.test import RequestFactory
-from store.models import Album, Contact
+from store.models import Album
+
 
 # test data creation
 class AlbumTestCase(TestCase):

@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import Album, Artist, Contact, Booking
+from rest_framework import status
+
+from store.models import Album, Artist, Contact, Booking
 
 
 # Index page
@@ -41,19 +43,21 @@ class BookingPageTestCase(TestCase):
         self.contact = Contact.objects.get(name='Freddie')
 
         # test that a new booking is made
+
     def test_new_booking_is_registered(self):
         old_bookings = Booking.objects.count()
         album_id = self.album.id
         name = self.contact.name
         email = self.contact.email
         response = self.client.post(reverse('store:detail', args=(album_id,)), {
-               'name': name,
-                'email': email
-          })
+            'name': name,
+            'email': email
+        })
         counter = Booking.objects.count()
-        self.assertEqual(counter, old_bookings + 1)
+        self.assertEqual(counter, old_bookings + 1) # Création du booking via le formulaire client
 
         # test that a booking belongs to a contact
+
 
 """ cassé car plus d'album rattaché à un booking mais un booking line
     def test_new_booking_belongs_to_a_contact(self):
@@ -68,5 +72,23 @@ class BookingPageTestCase(TestCase):
         self.assertEqual(self.contact, booking.contact)
 """
 
-        # test that a booking belong to an album
-        # idem
+
+# test that a booking belong to an album
+# idem
+
+# test that list return the full list of albums
+class GetAllAlbumList(TestCase):
+    """ Test module for GET all puppies API """
+
+    def setUp(self):
+        Album.objects.create(title="Rock")
+        Album.objects.create(title="Cat")
+        Album.objects.create(title="Paul")
+
+    def test_get_all_albums(self):
+        # get API response
+        response = self.client.get(reverse('store:listing'))
+        counter = Album.objects.count()
+        print(counter)
+        self.assertEqual(counter, 3)
+        self.assertEqual(response.status_code, 200)

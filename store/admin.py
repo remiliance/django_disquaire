@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin
 from django.utils.safestring import mark_safe
 
-from .models import Booking, Contact, Album, Artist, Booking, BookingLines
+from store.models import Contact, Album, Booking, BookingLines
 
 
 class BookingInline(admin.TabularInline):

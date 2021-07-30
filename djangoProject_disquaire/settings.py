@@ -31,7 +31,7 @@ DEBUG = False
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
 else:
-    DEBUG = True
+    DEBUG = False
 
 if os.environ.get('ENV') == 'PRODUCTION':
     ALLOWED_HOSTS = ['djangodisquaire.herokuapp.com']
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +98,10 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+
 
 WSGI_APPLICATION = 'djangoProject_disquaire.wsgi.application'
 
