@@ -1,7 +1,7 @@
 import importlib
 
 from django.db import models
-
+from store.signal import *
 
 class Artist(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -17,6 +17,9 @@ class Contact(models.Model):
     def __str__(self):
         return self.name
 
+    # utiliser pour le signal
+    def move(self, quantity):
+        post_contact_move.send(sender=self, q=quantity)
 
 class Album(models.Model):
     reference = models.IntegerField(null=True)
@@ -28,9 +31,12 @@ class Album(models.Model):
 
     class Meta:
         verbose_name = "album"
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         return self.title
+
+
 
 
     """"@classmethod

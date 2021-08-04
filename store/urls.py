@@ -4,7 +4,7 @@ from rest_framework import routers
 
 from . import views, api_views  # import views so we can use them in urls.
 from .api import PostContactViewSet, PostBookingViewSet
-
+import store.receivers
 
 app_name = 'store'
 
