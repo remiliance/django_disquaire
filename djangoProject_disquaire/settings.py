@@ -20,9 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-3w%_e45cf1@w=6wueq_5wcfzi-q+vb%6s8cch$$^#n5qrpa2w0'
+SECRET_KEY = 'django-insecure-3w%_e45cf1@w=6wueq_5wcfzi-q+vb%6s8cch$$^#n5qrpa2w0'
 
-SECRET_KEY = os.environ.get("SECRET_KEY") #,
+# SECRET_KEY = os.environ.get("SECRET_KEY") #,
                          #   'c@n%u@91tum=@j392g20b8znh7dqfo-v%81))gxbbmu$=dy_*)'  # development key for the moment
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -34,10 +34,10 @@ DEBUG = True
 else:
     DEBUG = False
 """
-DEBUG = int(os.environ.get("DEBUG", default=0))
+# DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = ['127.0.0.1']
 
 if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'djangoProject_disquaire.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -132,6 +132,7 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+"""
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 

@@ -12,8 +12,8 @@ from store.models import Album, Contact, Booking, BookingLines
 logging.basicConfig(level=logging.DEBUG)
 
 
-@login_required
-@permission_required('catalog.can_mark_returned')
+# @login_required
+# @permission_required('catalog.can_mark_returned')
 def index(request):
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)
@@ -117,23 +117,6 @@ def detail(request, album_id):
         form = ContactForm()
     context['form'] = form
     return render(request, 'store/detail.html', context)
-
-
-def search(request):
-    query = request.GET.get('query')
-    if not query:
-        albums = Album.objects.all()
-    else:
-        # title contains the query is and query is not sensitive to case.
-        albums = Album.objects.filter(title__icontains=query)
-    if not albums.exists():
-        albums = Album.objects.filter(artists__name__icontains=query)
-    title = "Résultats pour la requête %s" % query
-    context = {
-        'albums': albums,
-        'title': title
-    }
-    return render(request, 'store/search.html', context)
 
 
 def search(request):

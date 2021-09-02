@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-"""
+
 class testAPI(APITestCase):
 
      def test_api_contact_get_response(self):
@@ -9,10 +9,9 @@ class testAPI(APITestCase):
         self.assertEqual(response.satus_code, status.HTTP_200_OK)
 
 
-"""
-
 class GetAllContacts(TestCase):
     """ Test module for GET all contacts API """
+
 
     # initialize the APIClient app
 

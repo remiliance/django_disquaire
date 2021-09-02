@@ -1,13 +1,15 @@
 from django.contrib import admin
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
+from store import models
 from store.models import Contact, Album, Booking, BookingLines
 
 
 class BookingInline(admin.TabularInline):
     model = Booking
     fieldsets = [
-        (None, {'fields': [ 'id', 'contacted', 'created_at']})
+        (None, {'fields': ['id', 'contacted', 'created_at']})
     ]
     readonly_fields = ["created_at"]
     # list columns
@@ -17,11 +19,12 @@ class BookingInline(admin.TabularInline):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    inlines = [BookingInline, ]  # list of bookings made by a contact
+   inlines = [BookingInline, ]  # list of bookings made by a contact
 
 
 class AlbumArtistInline(admin.TabularInline):
     model = Album.artists.through # the query goes through an intermediate table.
+    extra = 1
 
 
 @admin.register(Album)
@@ -42,7 +45,10 @@ class BookingLinesLines(admin.TabularInline):
 
 @admin.register(BookingLines)
 class BookingLinesAdmin(admin.ModelAdmin):
-    pass
+    def album_link(self, booking):
+        path = "admin:store_album_change"
+        url = reverse(path, args=(booking.album.id,))
+        return mark_safe("<a href='{}'>{}</a>".format(url, booking.album.title))
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
@@ -54,7 +60,7 @@ class BookingAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at"]
 
 
-    def album_link(self, booking):
-        url = "/admin"
-        return mark_safe("<a href='{}'>{}</a>".format(url, booking.album.title))
+
+
+
 

@@ -29,15 +29,13 @@ class Album(models.Model):
     picture = models.URLField()
     artists = models.ManyToManyField(Artist, related_name='albums', blank=True)
 
+    reference = models.IntegerField('référenceahah', blank=True, null=True)
     class Meta:
         verbose_name = "album"
         permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         return self.title
-
-
-
 
     """"@classmethod
     def create(cls, title):
